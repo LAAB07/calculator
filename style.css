@@ -3,7 +3,7 @@
     margin: 0;
     box-sizing: border-box;
     background-color: rgb(225, 226, 213);
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: monospace;
 }
 
 body {
@@ -14,6 +14,11 @@ body {
 
 #header {
     margin-top: 40px;
+}
+
+.title {
+    font-size: 60px;
+    font-weight: bold;
 }
 
 #content {
@@ -32,16 +37,17 @@ body {
 }
 
 #top-calc {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     margin-bottom: 15px;
-}
-
-.display {
     width: 400px;
     height: 100px;
     background: black;
     color: white;
-    font-size: 40px;
+    font-size: 50px;
     font-weight: bold;
+    padding: 10px;
 }
 
 #sub-calc {
@@ -74,4 +80,9 @@ button {
 
 #footer {
     margin-top: 40px;
+}
+
+.author {
+    font-size: 15px;
+    font-style: italic;
 }
