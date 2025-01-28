@@ -58,7 +58,7 @@ body {
     flex-wrap:wrap;
 }
 
-.operator {
+.operator, #equals {
     background: rgb(54, 54, 54);
     color: white;
 }
