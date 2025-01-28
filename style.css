@@ -40,7 +40,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-bottom: 15px;
+    margin-top: 15px;
+    margin-bottom: 25px;
     width: 400px;
     height: 100px;
     background: black;
@@ -62,7 +63,7 @@ body {
     color: white;
 }
 
-.clear {
+#clear {
     background: rgb(102, 26, 26);
     color: white;
 }
