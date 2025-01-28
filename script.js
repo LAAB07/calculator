@@ -63,7 +63,9 @@ function clearDisplay(){
     operator = "";
     display.textContent = "0";
     switchNumber = false;
-    operatorButton.style.color = "white";
+    operatorButton.forEach(button =>{
+        button.style.color = "white";
+    })
     console.clear();
 }
 
@@ -91,6 +93,9 @@ function operate(a,b,op){
         result = divide(firstNumber,secondNumber);
     }
     display.textContent = result;
+    operatorButton.forEach(button =>{
+        button.style.color = "white";
+    })
 }
 
 function add(a,b){
