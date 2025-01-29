@@ -38,7 +38,7 @@ function setDisplay(){
         if(a.length<=8){
         a += this.textContent;
         display.textContent = a;
-        console.log("The first number is: "+ a);
+        console.log("The first number is: " + a);
         console.log(switchNumber);
         firstNumber = Number(a);
         }
@@ -46,7 +46,7 @@ function setDisplay(){
         if(b.length<=8){
             b += this.textContent;
             display.textContent = b;
-            console.log("The second number is: "+ b);
+            console.log("The second number is: " + b);
             console.log(switchNumber);
             secondNumber = Number(b);
         }
@@ -61,6 +61,7 @@ function clearDisplay(){
     firstNumber = "";
     secondNumber = "";
     operator = "";
+    result = "";
     display.textContent = "0";
     switchNumber = false;
     operatorButton.forEach(button =>{
@@ -70,16 +71,29 @@ function clearDisplay(){
 }
 
 function setOperator(){
-    op = this.textContent;
-    console.log(op);
-    switchNumber = true;
-    console.log(switchNumber);
-    operator = op;
-    this.style.color = "yellow";
+
+    if(op===""){
+        op = this.textContent;
+        console.log("The operator is: "+ op);
+        switchNumber = true;
+        console.log(switchNumber);
+        operator = op;
+        this.style.color = "yellow";
+    } else {
+        operate();
+        firstNumber = Number(result);
+        op = this.textContent;
+        console.log("The first number is: " + firstNumber);
+        console.log("The operator is: " + op);
+        console.log(switchNumber);
+        operator = op;
+        this.style.color = "yellow";
+        b = "";
+        secondNumber = "";
+    }
 }
 
 function operate(a,b,op){
-    console.log("Im listening");
     console.log("first number: " + firstNumber);
     console.log("second number: " + secondNumber);
     console.log("operator is: " + operator);
