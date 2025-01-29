@@ -11,7 +11,7 @@ let switchNumber = false;
 
 //Getting HTML elements
 
-let display = document.getElementById("top-calc");
+const display = document.getElementById("top-calc");
 const numberButton = document.querySelectorAll(".number");
 const clearButton = document.getElementById("clear");
 const equalsButton = document.getElementById("equals");
@@ -81,7 +81,7 @@ function setOperator(){
         this.style.color = "yellow";
     } else {
         operate();
-        firstNumber = Number(result);
+        firstNumber = Math.round(Number(result));
         op = this.textContent;
         console.log("The first number is: " + firstNumber);
         console.log("The operator is: " + op);
@@ -97,19 +97,26 @@ function operate(a,b,op){
     console.log("first number: " + firstNumber);
     console.log("second number: " + secondNumber);
     console.log("operator is: " + operator);
-    if(operator==="+"){
-        result = add(firstNumber,secondNumber);
-    } else if(operator==="-"){
-        result = subtract(firstNumber,secondNumber);
-    } else if(operator==="*"){
-        result = multiply(firstNumber,secondNumber);
-    } else if(operator==="/"){
-        result = divide(firstNumber,secondNumber);
+    if (firstNumber === ""){
+        display.textContent = "0";
+    } else if (secondNumber === 0){
+        display.textContent = "Error";
+        console.log("Error")
+    } else {
+        if(operator==="+"){
+            result = add(firstNumber,secondNumber);
+        } else if(operator==="-"){
+            result = subtract(firstNumber,secondNumber);
+        } else if(operator==="*"){
+            result = multiply(firstNumber,secondNumber);
+        } else if(operator==="/"){
+            result = divide(firstNumber,secondNumber);
+        }
+        display.textContent = result;
+        operatorButton.forEach(button =>{
+            button.style.color = "white";
+        })
     }
-    display.textContent = result;
-    operatorButton.forEach(button =>{
-        button.style.color = "white";
-    })
 }
 
 function add(a,b){
