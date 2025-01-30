@@ -40,8 +40,15 @@ equalsButton.addEventListener("click", operate);
 
 allButtons.forEach(button =>{
     button.disabled = true;
+    button.style.color = "black";
 })
 powerButton.disabled = false;
+powerButton.style.color = "rgb(102, 26, 26)";
+clearButton.style.color = "white";
+operatorButton.forEach(button =>{
+    button.style.color = "white";
+})
+equalsButton.style.color = "white";
 
 //Functions
 
@@ -54,6 +61,7 @@ function power(){
         allButtons.forEach(button =>{
             button.disabled = false;
         })
+        powerButton.style.color = "red";
     } else {
         clearDisplay();
         display.textContent = "";
@@ -61,6 +69,7 @@ function power(){
         allButtons.forEach(button =>{
             button.disabled = true;
         })
+        powerButton.style.color = "rgb(102, 26, 26)";
         powerButton.disabled = false;
     }
 }
@@ -110,7 +119,7 @@ function setOperator(){
         switchNumber = true;
         console.log(switchNumber);
         operator = op;
-        this.style.color = "yellow";
+        this.style.color = "red";
     } else {
         if(secondNumber != ""){
             operate();
@@ -120,7 +129,7 @@ function setOperator(){
             console.log("The operator is: " + op);
             console.log(switchNumber);
             operator = op;
-            this.style.color = "yellow";
+            this.style.color = "red";
             b = "";
             secondNumber = "";
         } else {
@@ -131,7 +140,7 @@ function setOperator(){
             operatorButton.forEach(button =>{
                 button.style.color = "white";
             })
-            this.style.color = "yellow";
+            this.style.color = "red";
         }
     }
 }
