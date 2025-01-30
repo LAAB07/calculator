@@ -80,16 +80,27 @@ function setOperator(){
         operator = op;
         this.style.color = "yellow";
     } else {
-        operate();
-        firstNumber = result;
-        op = this.textContent;
-        console.log("The first number is: " + firstNumber);
-        console.log("The operator is: " + op);
-        console.log(switchNumber);
-        operator = op;
-        this.style.color = "yellow";
-        b = "";
-        secondNumber = "";
+        if(secondNumber != ""){
+            operate();
+            firstNumber = result;
+            op = this.textContent;
+            console.log("The first number is: " + firstNumber);
+            console.log("The operator is: " + op);
+            console.log(switchNumber);
+            operator = op;
+            this.style.color = "yellow";
+            b = "";
+            secondNumber = "";
+        } else {
+            op = this.textContent;
+            console.log("The operator is: " + op);
+            console.log(switchNumber);
+            operator = op;
+            operatorButton.forEach(button =>{
+                button.style.color = "white";
+            })
+            this.style.color = "yellow";
+        }
     }
 }
 
