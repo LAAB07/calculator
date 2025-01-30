@@ -75,22 +75,26 @@ function power(){
 }
 
 function setDisplay(){
-    backspaceButton.disabled = false;
-    if(switchNumber === false){
-        if(a.length<=8){
-        a += this.textContent;
-        display.textContent = a;
-        console.log("The first number is: " + a);
-        // console.log(switchNumber);
-        firstNumber = Number(a);
-        }
+    if(this.textContent === "0" && display.textContent === "0"){
+
     } else {
-        if(b.length<=8){
-            b += this.textContent;
-            display.textContent = b;
-            console.log("The second number is: " + b);
-            console.log(switchNumber);
-            secondNumber = Number(b);
+        backspaceButton.disabled = false;
+        if(switchNumber === false){
+            if(a.length<=8){
+            a += this.textContent;
+            display.textContent = a;
+            console.log("The first number is: " + a);
+            // console.log(switchNumber);
+            firstNumber = Number(a);
+            }
+        } else {
+            if(b.length<=8){
+                b += this.textContent;
+                display.textContent = b;
+                console.log("The second number is: " + b);
+                console.log(switchNumber);
+                secondNumber = Number(b);
+            }
         }
     }
 
