@@ -18,6 +18,7 @@ const powerButton = document.getElementById("power");
 const clearButton = document.getElementById("clear");
 const equalsButton = document.getElementById("equals");
 const operatorButton = document.querySelectorAll(".operator");
+const allButtons = document.querySelectorAll("button");
 
 //Click events
 
@@ -35,16 +36,32 @@ clearButton.addEventListener("click", clearDisplay);
 
 equalsButton.addEventListener("click", operate);
 
+//Disable buttons at the beggining
+
+allButtons.forEach(button =>{
+    button.disabled = true;
+})
+powerButton.disabled = false;
+
 //Functions
+
+//buttons.forEach(button => button.disabled = true);
 
 function power(){
     if(turnOff===true){
         display.textContent = "0";
         turnOff = false;
+        allButtons.forEach(button =>{
+            button.disabled = false;
+        })
     } else {
         clearDisplay();
         display.textContent = "";
         turnOff = true;
+        allButtons.forEach(button =>{
+            button.disabled = true;
+        })
+        powerButton.disabled = false;
     }
 }
 
