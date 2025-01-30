@@ -81,7 +81,7 @@ function setOperator(){
         this.style.color = "yellow";
     } else {
         operate();
-        firstNumber = Math.round(Number(result));
+        firstNumber = result;
         op = this.textContent;
         console.log("The first number is: " + firstNumber);
         console.log("The operator is: " + op);
@@ -112,7 +112,20 @@ function operate(a,b,op){
         } else if(operator==="/"){
             result = divide(firstNumber,secondNumber);
         }
-        display.textContent = result;
+        console.log(typeof(result));
+        if(result.toString().length>9){
+            let newResult = "";
+            newResult = result.toString().substr(0,9);
+            console.log(result);
+            if(Number(newResult) % 1 != 0){
+                display.textContent = result.toFixed(8-newResult.indexOf("."));
+                // display.textContent = Number(newResult).toFixed(8-newResult.indexOf("."));
+            } else {
+                display.textContent = Math.round(result);
+            }
+        } else {
+            display.textContent = result;
+        }
         operatorButton.forEach(button =>{
             button.style.color = "white";
         })
