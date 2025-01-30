@@ -8,11 +8,13 @@ let secondNumber = "";
 let operator = "";
 let result = "";
 let switchNumber = false;
+let turnOff = true;
 
 //Getting HTML elements
 
 const display = document.getElementById("top-calc");
 const numberButton = document.querySelectorAll(".number");
+const powerButton = document.getElementById("power");
 const clearButton = document.getElementById("clear");
 const equalsButton = document.getElementById("equals");
 const operatorButton = document.querySelectorAll(".operator");
@@ -27,11 +29,24 @@ operatorButton.forEach(button =>{
     button.addEventListener("click", setOperator);
 })
 
+powerButton.addEventListener("click", power);
+
 clearButton.addEventListener("click", clearDisplay);
 
 equalsButton.addEventListener("click", operate);
 
 //Functions
+
+function power(){
+    if(turnOff===true){
+        display.textContent = "0";
+        turnOff = false;
+    } else {
+        clearDisplay();
+        display.textContent = "";
+        turnOff = true;
+    }
+}
 
 function setDisplay(){
     if(switchNumber === false){

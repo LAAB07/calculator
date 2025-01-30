@@ -58,6 +58,12 @@ body {
     flex-wrap:wrap;
 }
 
+#power {
+    background: black;
+    color: rgb(102, 26, 26);
+    font-size: 20px;
+}
+
 .operator, #equals {
     background: rgb(54, 54, 54);
     color: white;
@@ -74,7 +80,7 @@ button {
     background: gray;
     font-size: 25px;
     font-weight: bold;
-    border: 3px solid black;
+    border: 2px solid black;
     border-radius: 4px;
     padding: 8px 16px;
 }
