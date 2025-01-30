@@ -20,6 +20,7 @@ const equalsButton = document.getElementById("equals");
 const operatorButton = document.querySelectorAll(".operator");
 const allButtons = document.querySelectorAll("button");
 const backspaceButton = document.getElementById("backspace");
+const signButton = document.getElementById("sign");
 
 //Click events
 
@@ -33,6 +34,7 @@ powerButton.addEventListener("click", power);
 clearButton.addEventListener("click", clearDisplay);
 equalsButton.addEventListener("click", operate);
 backspaceButton.addEventListener("click", undoLastInput);
+signButton.addEventListener("click", changeSign);
 
 
 //Disable buttons at the beggining
@@ -121,6 +123,30 @@ function undoLastInput(){
             display.textContent = newNumber;
             console.log(newNumber);
             b = newNumber;
+            secondNumber = Number(b);
+        }
+    }
+}
+
+function changeSign(){
+    if(display.textContent === "0"){
+        console.log("Cannot change sign to zero")
+    } else {
+        if(switchNumber === false && Number(a)>0){
+            a = -Math.abs(a)
+            display.textContent = a;
+            firstNumber = Number(a);
+        } else if (switchNumber===false && Number(a)<0){
+            a = Math.abs(a);
+            display.textContent = a;
+            firstNumber = Number(a);
+        } else if (switchNumber===true && Number(b)>0){
+            b = -Math.abs(b);
+            display.textContent = b;
+            secondNumber = Number(b);
+        } else {
+            b = Math.abs(b);
+            display.textContent = b;
             secondNumber = Number(b);
         }
     }
