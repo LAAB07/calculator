@@ -19,22 +19,21 @@ const clearButton = document.getElementById("clear");
 const equalsButton = document.getElementById("equals");
 const operatorButton = document.querySelectorAll(".operator");
 const allButtons = document.querySelectorAll("button");
+const backspaceButton = document.getElementById("backspace");
 
 //Click events
 
 numberButton.forEach(button =>{
     button.addEventListener("click", setDisplay);
 });
-
 operatorButton.forEach(button =>{
     button.addEventListener("click", setOperator);
 })
-
 powerButton.addEventListener("click", power);
-
 clearButton.addEventListener("click", clearDisplay);
-
 equalsButton.addEventListener("click", operate);
+backspaceButton.addEventListener("click", undoLastInput);
+
 
 //Disable buttons at the beggining
 
@@ -61,6 +60,7 @@ function power(){
         allButtons.forEach(button =>{
             button.disabled = false;
         })
+        backspaceButton.disabled = true;
         powerButton.style.color = "red";
     } else {
         clearDisplay();
@@ -75,12 +75,13 @@ function power(){
 }
 
 function setDisplay(){
+    backspaceButton.disabled = false;
     if(switchNumber === false){
         if(a.length<=8){
         a += this.textContent;
         display.textContent = a;
         console.log("The first number is: " + a);
-        console.log(switchNumber);
+        // console.log(switchNumber);
         firstNumber = Number(a);
         }
     } else {
@@ -93,6 +94,32 @@ function setDisplay(){
         }
     }
 
+}
+
+function undoLastInput(){
+    let newNumber = "";
+    if(a.length===1 || b.length===1){
+        display.textContent = "0";
+        a = "";
+        b = "";
+        backspaceButton.disabled = true;
+    } else {
+        if(switchNumber===false){
+            console.log(a);
+            newNumber = a.slice(0, -1);
+            display.textContent = newNumber;
+            console.log(newNumber);
+            a = newNumber;
+            firstNumber = Number(a);
+        } else {
+            console.log(b);
+            newNumber = b.slice(0, -1);
+            display.textContent = newNumber;
+            console.log(newNumber);
+            b = newNumber;
+            secondNumber = Number(b);
+        }
+    }
 }
 
 function clearDisplay(){
@@ -109,6 +136,7 @@ function clearDisplay(){
         button.style.color = "white";
     })
     console.clear();
+    backspaceButton.disabled = true;
 }
 
 function setOperator(){
@@ -199,4 +227,6 @@ function multiply(a,b){
 function divide(a,b){
     return a/b;
 }
+
+
 
