@@ -53,8 +53,6 @@ equalsButton.style.color = "white";
 
 //Functions
 
-//buttons.forEach(button => button.disabled = true);
-
 function power(){
     if(turnOff===true){
         display.textContent = "0";
@@ -85,16 +83,14 @@ function setDisplay(){
             if(a.length<=8){
             a += this.textContent;
             display.textContent = a;
-            console.log("The first number is: " + a);
-            // console.log(switchNumber);
+            // console.log("The first number is: " + a);
             firstNumber = Number(a);
             }
         } else {
             if(b.length<=8){
                 b += this.textContent;
                 display.textContent = b;
-                console.log("The second number is: " + b);
-                console.log(switchNumber);
+                // console.log("The second number is: " + b);
                 secondNumber = Number(b);
             }
         }
@@ -129,25 +125,48 @@ function undoLastInput(){
 }
 
 function changeSign(){
+    console.log(switchNumber);
     if(display.textContent === "0"){
         console.log("Cannot change sign to zero")
     } else {
-        if(switchNumber === false && Number(a)>0){
-            a = -Math.abs(a)
-            display.textContent = a;
-            firstNumber = Number(a);
-        } else if (switchNumber===false && Number(a)<0){
-            a = Math.abs(a);
-            display.textContent = a;
-            firstNumber = Number(a);
-        } else if (switchNumber===true && Number(b)>0){
-            b = -Math.abs(b);
-            display.textContent = b;
-            secondNumber = Number(b);
+        if(switchNumber === false){
+            if(result != 0 && result > 0){
+                result = -Math.abs(result);
+                display.textContent = result;
+                firstNumber = result;
+                console.log("Here I am");
+            } else if(result !=0 && result < 0){
+                result = Math.abs(result);
+                display.textContent = result;
+                firstNumber = result;
+            } else if(Number(a)>0){
+                a = -Math.abs(a)
+                display.textContent = a;
+                firstNumber = Number(a);
+            } else if (Number(a)<0){
+                a = Math.abs(a);
+                display.textContent = a;
+                firstNumber = Number(a);
+            } 
         } else {
-            b = Math.abs(b);
-            display.textContent = b;
-            secondNumber = Number(b);
+            if(Number(b)>0){
+                b = -Math.abs(b);
+                display.textContent = b;
+                secondNumber = Number(b);
+            } else if(Number(b)<0){
+                b = Math.abs(b);
+                display.textContent = b;
+                secondNumber = Number(b);
+            } else if(result != 0 && result > 0){
+                result = -Math.abs(result);
+                display.textContent = result;
+                firstNumber = result;
+                console.log("Here I am");
+            } else if(result !=0 && result < 0){
+                result = Math.abs(result);
+                display.textContent = result;
+                firstNumber = result;
+            } 
         }
     }
 }
@@ -173,27 +192,25 @@ function setOperator(){
 
     if(op===""){
         op = this.textContent;
-        console.log("The operator is: "+ op);
+        // console.log("The operator is: "+ op);
         switchNumber = true;
-        console.log(switchNumber);
         operator = op;
         this.style.color = "red";
     } else {
         if(secondNumber != ""){
             operate();
             firstNumber = result;
+            switchNumber = true;
             op = this.textContent;
             console.log("The first number is: " + firstNumber);
-            console.log("The operator is: " + op);
-            console.log(switchNumber);
+            console.log("Oooops");
             operator = op;
             this.style.color = "red";
             b = "";
             secondNumber = "";
         } else {
             op = this.textContent;
-            console.log("The operator is: " + op);
-            console.log(switchNumber);
+            // console.log("The operator is: " + op);
             operator = op;
             operatorButton.forEach(button =>{
                 button.style.color = "white";
@@ -205,8 +222,8 @@ function setOperator(){
 
 function operate(a,b,op){
     console.log("first number: " + firstNumber);
-    console.log("second number: " + secondNumber);
     console.log("operator is: " + operator);
+    console.log("second number: " + secondNumber);
     if (firstNumber === ""){
         display.textContent = "0";
     } else if (secondNumber === 0){
@@ -222,23 +239,27 @@ function operate(a,b,op){
         } else if(operator==="/"){
             result = divide(firstNumber,secondNumber);
         }
-        console.log(typeof(result));
+        // console.log(typeof(result));
         if(result.toString().length>9){
             let newResult = "";
             newResult = result.toString().substr(0,9);
-            console.log(result);
+            console.log("The result is: " + result);
             if(Number(newResult) % 1 != 0){
                 display.textContent = result.toFixed(8-newResult.indexOf("."));
                 // display.textContent = Number(newResult).toFixed(8-newResult.indexOf("."));
             } else {
+                console.log("The result is: " + result);
                 display.textContent = Math.round(result);
             }
         } else {
+            console.log("The result is: " + result);
             display.textContent = result;
         }
         operatorButton.forEach(button =>{
             button.style.color = "white";
         })
+        op = "";
+        operator = "";
     }
 }
 
