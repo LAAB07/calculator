@@ -99,15 +99,23 @@ function setDisplay(){
 function undoLastInput(){
     let newNumber = "";
     if(a.length===1){
-        display.textContent = "0";
-        a = "";
-        firstNumber = 0;
-        backspaceButton.disabled = true;
+        if(result!=0){
+
+        } else {
+            display.textContent = "0";
+            a = "";
+            firstNumber = 0;
+            backspaceButton.disabled = true;
+        }
     } else if(b.length===1){
-        display.textContent = "0";
-        b = "";
-        secondNumber = 0;
-        backspaceButton.disabled = true;
+        if(result!=0){
+
+        } else {
+            display.textContent = "0";
+            b = "";
+            secondNumber = 0;
+            backspaceButton.disabled = true;
+        }
     } else {
         if(switchNumber===false){
             if(result!=0){
@@ -219,6 +227,9 @@ function setOperator(){
             b = "";
             secondNumber = "";
         } else {
+            firstNumber = result;
+            switchNumber = true;
+            console.log("here");
             op = this.textContent;
             // console.log("The operator is: " + op);
             operator = op;
@@ -226,6 +237,8 @@ function setOperator(){
                 button.style.color = "white";
             })
             this.style.color = "red";
+            b = "";
+            secondNumber = "";
         }
     }
 }
@@ -278,6 +291,8 @@ function operate(a,b,op){
         })
         op = "";
         operator = "";
+        // b = "";
+        // secondNumber = 0;
     }
 }
 
