@@ -291,8 +291,7 @@ function operate(a,b,op){
         })
         op = "";
         operator = "";
-        // b = "";
-        // secondNumber = 0;
+        switchNumber = false;
     }
 }
 
