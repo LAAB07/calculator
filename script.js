@@ -83,14 +83,12 @@ function setDisplay(){
             if(a.length<=8){
             a += this.textContent;
             display.textContent = a;
-            // console.log("The first number is: " + a);
             firstNumber = Number(a);
             }
         } else {
             if(b.length<=8){
                 b += this.textContent;
                 display.textContent = b;
-                // console.log("The second number is: " + b);
                 secondNumber = Number(b);
             }
         }
@@ -100,26 +98,40 @@ function setDisplay(){
 
 function undoLastInput(){
     let newNumber = "";
-    if(a.length===1 || b.length===1){
+    if(a.length===1){
         display.textContent = "0";
         a = "";
+        firstNumber = 0;
+        backspaceButton.disabled = true;
+    } else if(b.length===1){
+        display.textContent = "0";
         b = "";
+        secondNumber = 0;
         backspaceButton.disabled = true;
     } else {
         if(switchNumber===false){
-            console.log(a);
-            newNumber = a.slice(0, -1);
-            display.textContent = newNumber;
-            console.log(newNumber);
-            a = newNumber;
-            firstNumber = Number(a);
+            if(result!=0){
+
+            } else {
+                console.log(a);
+                newNumber = a.slice(0, -1);
+                display.textContent = newNumber;
+                console.log(newNumber);
+                a = newNumber;
+                firstNumber = Number(a);
+            }
         } else {
-            console.log(b);
-            newNumber = b.slice(0, -1);
-            display.textContent = newNumber;
-            console.log(newNumber);
-            b = newNumber;
-            secondNumber = Number(b);
+            if(result!=0){
+
+            } else {
+                console.log("here");
+                console.log(b);
+                newNumber = b.slice(0, -1);
+                display.textContent = newNumber;
+                console.log(newNumber);
+                b = newNumber;
+                secondNumber = Number(b);
+            }
         }
     }
 }
@@ -134,7 +146,6 @@ function changeSign(){
                 result = -Math.abs(result);
                 display.textContent = result;
                 firstNumber = result;
-                console.log("Here I am");
             } else if(result !=0 && result < 0){
                 result = Math.abs(result);
                 display.textContent = result;
@@ -161,7 +172,6 @@ function changeSign(){
                 result = -Math.abs(result);
                 display.textContent = result;
                 firstNumber = result;
-                console.log("Here I am");
             } else if(result !=0 && result < 0){
                 result = Math.abs(result);
                 display.textContent = result;
@@ -224,11 +234,10 @@ function operate(a,b,op){
     console.log("first number: " + firstNumber);
     console.log("operator is: " + operator);
     console.log("second number: " + secondNumber);
-    if (firstNumber === ""){
+    if (a === 0){
         display.textContent = "0";
-    } else if (secondNumber === 0){
-        display.textContent = "Error";
-        console.log("Error")
+        a = 0;
+        firstNumber = 0;
     } else {
         if(operator==="+"){
             result = add(firstNumber,secondNumber);
@@ -237,23 +246,32 @@ function operate(a,b,op){
         } else if(operator==="*"){
             result = multiply(firstNumber,secondNumber);
         } else if(operator==="/"){
-            result = divide(firstNumber,secondNumber);
+            if (secondNumber === 0){
+                display.textContent = "Error";
+                console.log("Error")
+            } else {
+                result = divide(firstNumber,secondNumber);
+            }
         }
         // console.log(typeof(result));
-        if(result.toString().length>9){
-            let newResult = "";
-            newResult = result.toString().substr(0,9);
-            console.log("The result is: " + result);
-            if(Number(newResult) % 1 != 0){
-                display.textContent = result.toFixed(8-newResult.indexOf("."));
-                // display.textContent = Number(newResult).toFixed(8-newResult.indexOf("."));
+        if(result===""){
+
+        } else {
+            if(result.toString().length>9){
+                let newResult = "";
+                newResult = result.toString().substr(0,9);
+                console.log("The result is: " + result);
+                if(Number(newResult) % 1 != 0){
+                    display.textContent = result.toFixed(8-newResult.indexOf("."));
+                    // display.textContent = Number(newResult).toFixed(8-newResult.indexOf("."));
+                } else {
+                    console.log("The result is: " + result);
+                    display.textContent = Math.round(result);
+                }
             } else {
                 console.log("The result is: " + result);
-                display.textContent = Math.round(result);
+                display.textContent = result;
             }
-        } else {
-            console.log("The result is: " + result);
-            display.textContent = result;
         }
         operatorButton.forEach(button =>{
             button.style.color = "white";
