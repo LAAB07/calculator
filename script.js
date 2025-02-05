@@ -21,6 +21,7 @@ const operatorButton = document.querySelectorAll(".operator");
 const allButtons = document.querySelectorAll("button");
 const backspaceButton = document.getElementById("backspace");
 const signButton = document.getElementById("sign");
+const pointButton = document.getElementById("point");
 
 //Click events
 
@@ -35,6 +36,7 @@ clearButton.addEventListener("click", clearDisplay);
 equalsButton.addEventListener("click", operate);
 backspaceButton.addEventListener("click", undoLastInput);
 signButton.addEventListener("click", changeSign);
+pointButton.addEventListener("click", getDecimals);
 
 
 //Disable buttons at the beggining
@@ -96,6 +98,34 @@ function setDisplay(){
 
 }
 
+function getDecimals(){
+    if(this.textContent === "0" && display.textContent === "0"){
+
+    } else {
+        backspaceButton.disabled = false;
+        if(switchNumber === false){
+            if(a.length<=8){
+                if(a.includes(".")){
+                    pointButton.disabled = true;
+                } else {
+                    a += this.textContent;
+                    display.textContent = a;
+                }
+            }
+        } else {
+            if(b.length<=8){
+                if(b.includes(".")){
+                    pointButton.disabled = true;
+                } else {
+                    b += this.textContent;
+                    display.textContent = b;
+                }
+            }
+        }
+    }
+
+}
+
 function undoLastInput(){
     let newNumber = "";
     if(a.length===1){
@@ -132,7 +162,6 @@ function undoLastInput(){
             if(result!=0){
 
             } else {
-                console.log("here");
                 console.log(b);
                 newNumber = b.slice(0, -1);
                 display.textContent = newNumber;
@@ -212,6 +241,7 @@ function setOperator(){
         op = this.textContent;
         // console.log("The operator is: "+ op);
         switchNumber = true;
+        pointButton.disabled = false;
         operator = op;
         this.style.color = "red";
     } else {
@@ -219,9 +249,9 @@ function setOperator(){
             operate();
             firstNumber = result;
             switchNumber = true;
+            pointButton.disabled = false;
             op = this.textContent;
             console.log("The first number is: " + firstNumber);
-            console.log("Oooops");
             operator = op;
             this.style.color = "red";
             b = "";
@@ -229,7 +259,6 @@ function setOperator(){
         } else {
             firstNumber = result;
             switchNumber = true;
-            console.log("here");
             op = this.textContent;
             // console.log("The operator is: " + op);
             operator = op;
@@ -292,6 +321,7 @@ function operate(a,b,op){
         op = "";
         operator = "";
         switchNumber = false;
+        pointButton.disabled = false;
     }
 }
 
