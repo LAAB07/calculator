@@ -39,11 +39,11 @@ backspaceButton.addEventListener("click", undoLastInput);
 signButton.addEventListener("click", changeSign);
 pointButton.addEventListener("click", getDecimals);
 document.addEventListener('keydown', (e) => {
-    if (e.code == "NumpadEnter") { operate() } 
-    else if (e.code == "Backspace") { undoLastInput(e) }
-    else if (e.code == "Delete") { clearDisplay() }
-    else if (e.code == "ShiftRight") { power() }
-    else if (e.key == "+"||e.key == "-"||e.key == "*"||e.key == "/") { setOperator(e)}
+    if (e.code === "NumpadEnter") { operate() } 
+    else if (e.code === "Backspace") { undoLastInput() }
+    else if (e.code === "Delete") { clearDisplay() }
+    else if (e.key === "p") { power() }
+    else if (e.key === "+"||e.key === "-"||e.key === "*"||e.key === "/") { setOperator(e)}
     else { setDisplay(e) }
 })
 
@@ -73,7 +73,6 @@ function power(){
         })
         backspaceButton.disabled = true;
         powerButton.style.color = "red";
-        functionEnabled = false;
     } else {
         clearDisplay();
         display.textContent = "";
@@ -87,50 +86,54 @@ function power(){
 }
 
 function setDisplay(e){
-    if(e.type == "click"){
-        if(this.textContent === "0" && display.textContent === "0"){
-
-        } else {
-            functionEnabled = true;
-            backspaceButton.disabled = false;
-            if(switchNumber === false){
-                if(a.length<=8){
-                a += this.textContent;
-                display.textContent = a;
-                firstNumber = Number(a);
-                }
-            } else {
-                if(b.length<=8){
-                    b += this.textContent;
-                    display.textContent = b;
-                    secondNumber = Number(b);
-                }
-            }
-        }
+    if(turnOff===true){
+        return;
     } else {
-        if(e.key == "0" && display.textContent === "0"){
-
-        } else if(e.key == "0"||e.key == "1"||e.key == "2"||
-            e.key == "3"||e.key == "4"||e.key == "5"||e.key == "6"||
-            e.key == "7"||e.key == "8"||e.key == "9"||e.key == "."){
-            backspaceButton.disabled = false;
-            if(switchNumber === false){
-                if(a.length<=8){
-                a += e.key;
-                display.textContent = a;
-                firstNumber = Number(a);
-                }
+        if(e.type == "click"){
+            if(this.textContent === "0" && display.textContent === "0"){
+                return;
             } else {
-                if(b.length<=8){
-                    b += e.key;
-                    display.textContent = b;
-                    secondNumber = Number(b);
+                functionEnabled = true;
+                backspaceButton.disabled = false;
+                if(switchNumber === false){
+                    if(a.length<=8){
+                    a += this.textContent;
+                    display.textContent = a;
+                    firstNumber = Number(a);
+                    }
+                } else {
+                    if(b.length<=8){
+                        b += this.textContent;
+                        display.textContent = b;
+                        secondNumber = Number(b);
+                    }
                 }
             }
         } else {
+            if(e.key == "0" && display.textContent === "0"){
+                return;
+            } else if(e.key == "0"||e.key == "1"||e.key == "2"||
+                e.key == "3"||e.key == "4"||e.key == "5"||e.key == "6"||
+                e.key == "7"||e.key == "8"||e.key == "9"||e.key == "."){
+                    functionEnabled = true;
+                    backspaceButton.disabled = false;
+                    if(switchNumber === false){
+                        if(a.length<=8){
+                        a += e.key;
+                        display.textContent = a;
+                        firstNumber = Number(a);
+                        }
+                    } else {
+                        if(b.length<=8){
+                            b += e.key;
+                            display.textContent = b;
+                            secondNumber = Number(b);
+                        }
+                    }
+            }
 
         }
-
+    
     }
 
 }
@@ -163,57 +166,46 @@ function getDecimals(){
 
 }
 
-function undoLastInput(e){
+function undoLastInput(){
+    let newNumber = "";
     if(!functionEnabled){
         return;
-    }
-    let newNumber = "";
-    if(a.length===1){
-        if(result!=0){
-
-        } else {
-            display.textContent = "0";
-            a = "";
-            firstNumber = 0;
-            backspaceButton.disabled = true;
-            functionEnabled = false;
-            // if(e.code=="Backspace"){
-            //     e.preventDefault();
-            //     return false;
-            // }
-        }
-    } else if(b.length===1){
-        if(result!=0){
-
-        } else {
-            display.textContent = "0";
-            b = "";
-            secondNumber = 0;
-            backspaceButton.disabled = true;
-            functionEnabled = false;
-        }
     } else {
-        if(switchNumber===false){
+        if(a.length===1){
             if(result!=0){
-
+                return;
             } else {
-                console.log(a);
-                newNumber = a.slice(0, -1);
-                display.textContent = newNumber;
-                console.log(newNumber);
-                a = newNumber;
-                firstNumber = Number(a);
+                display.textContent = "0";
+                a = "";
+                firstNumber = 0;
+                backspaceButton.disabled = true;
+                functionEnabled = false;
             }
+        } else if(b.length===1){
+                display.textContent = "0";
+                b = "";
+                secondNumber = 0;
+                backspaceButton.disabled = true;
+                functionEnabled = false;
         } else {
-            if(result!=0){
-
+            if(switchNumber===false){
+                if(result!=0){
+                    return;
+                } else {
+                    console.log(a);
+                    newNumber = a.slice(0, -1);
+                    display.textContent = newNumber;
+                    console.log(newNumber);
+                    a = newNumber;
+                    firstNumber = Number(a);
+                }
             } else {
-                console.log(b);
-                newNumber = b.slice(0, -1);
-                display.textContent = newNumber;
-                console.log(newNumber);
-                b = newNumber;
-                secondNumber = Number(b);
+                    console.log(b);
+                    newNumber = b.slice(0, -1);
+                    display.textContent = newNumber;
+                    console.log(newNumber);
+                    b = newNumber;
+                    secondNumber = Number(b);
             }
         }
     }
@@ -277,25 +269,27 @@ function clearDisplay(){
     operatorButton.forEach(button =>{
         button.style.color = "white";
     })
-    console.clear();
+    // console.clear();
     backspaceButton.disabled = true;
+    functionEnabled = false;
 }
 
 function setOperator(e){
     if(e.type == "click"){
         if(op===""){
             op = this.textContent;
-            // console.log("The operator is: "+ op);
             switchNumber = true;
             pointButton.disabled = false;
             operator = op;
             this.style.color = "red";
+            functionEnabled = true;
         } else {
             if(secondNumber != ""){
                 operate();
                 firstNumber = result;
                 switchNumber = true;
                 pointButton.disabled = false;
+                functionEnabled = true;
                 op = this.textContent;
                 console.log("The first number is: " + firstNumber);
                 operator = op;
@@ -305,8 +299,8 @@ function setOperator(e){
             } else {
                 firstNumber = result;
                 switchNumber = true;
+                functionEnabled = true;
                 op = this.textContent;
-                // console.log("The operator is: " + op);
                 operator = op;
                 operatorButton.forEach(button =>{
                     button.style.color = "white";
@@ -319,33 +313,31 @@ function setOperator(e){
     } else {
         if(op===""){
             op = e.key;
-            // console.log("The operator is: "+ op);
             switchNumber = true;
             pointButton.disabled = false;
             operator = op;
-            // e.key.style.color = "red";
+            functionEnabled = true;
         } else {
             if(secondNumber != ""){
                 operate();
                 firstNumber = result;
                 switchNumber = true;
                 pointButton.disabled = false;
+                functionEnabled = true;
                 op = e.key;
                 console.log("The first number is: " + firstNumber);
                 operator = op;
-                // e.key.style.color = "red";
                 b = "";
                 secondNumber = "";
             } else {
                 firstNumber = result;
                 switchNumber = true;
+                functionEnabled = true;
                 op = e.key;
-                // console.log("The operator is: " + op);
                 operator = op;
                 operatorButton.forEach(button =>{
                     button.style.color = "white";
                 })
-                // e.key.style.color = "red";
                 b = "";
                 secondNumber = "";
             }
@@ -377,7 +369,6 @@ function operate(a,b,op){
                 result = divide(firstNumber,secondNumber);
             }
         }
-        // console.log(typeof(result));
         if(result===""){
 
         } else {
@@ -387,7 +378,6 @@ function operate(a,b,op){
                 console.log("The result is: " + result);
                 if(Number(newResult) % 1 != 0){
                     display.textContent = result.toFixed(8-newResult.indexOf("."));
-                    // display.textContent = Number(newResult).toFixed(8-newResult.indexOf("."));
                 } else {
                     console.log("The result is: " + result);
                     display.textContent = Math.round(result);
@@ -422,6 +412,4 @@ function multiply(a,b){
 function divide(a,b){
     return a/b;
 }
-
-
 
