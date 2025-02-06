@@ -9,6 +9,7 @@ let operator = "";
 let result = "";
 let switchNumber = false;
 let turnOff = true;
+let functionEnabled = false;
 
 //Getting HTML elements
 
@@ -23,7 +24,7 @@ const backspaceButton = document.getElementById("backspace");
 const signButton = document.getElementById("sign");
 const pointButton = document.getElementById("point");
 
-//Click events
+//Click & Key events
 
 numberButton.forEach(button =>{
     button.addEventListener("click", setDisplay);
@@ -37,6 +38,14 @@ equalsButton.addEventListener("click", operate);
 backspaceButton.addEventListener("click", undoLastInput);
 signButton.addEventListener("click", changeSign);
 pointButton.addEventListener("click", getDecimals);
+document.addEventListener('keydown', (e) => {
+    if (e.code == "NumpadEnter") { operate() } 
+    else if (e.code == "Backspace") { undoLastInput(e) }
+    else if (e.code == "Delete") { clearDisplay() }
+    else if (e.code == "ShiftRight") { power() }
+    else if (e.key == "+"||e.key == "-"||e.key == "*"||e.key == "/") { setOperator(e)}
+    else { setDisplay(e) }
+})
 
 
 //Disable buttons at the beggining
@@ -64,6 +73,7 @@ function power(){
         })
         backspaceButton.disabled = true;
         powerButton.style.color = "red";
+        functionEnabled = false;
     } else {
         clearDisplay();
         display.textContent = "";
@@ -76,24 +86,51 @@ function power(){
     }
 }
 
-function setDisplay(){
-    if(this.textContent === "0" && display.textContent === "0"){
+function setDisplay(e){
+    if(e.type == "click"){
+        if(this.textContent === "0" && display.textContent === "0"){
 
-    } else {
-        backspaceButton.disabled = false;
-        if(switchNumber === false){
-            if(a.length<=8){
-            a += this.textContent;
-            display.textContent = a;
-            firstNumber = Number(a);
-            }
         } else {
-            if(b.length<=8){
-                b += this.textContent;
-                display.textContent = b;
-                secondNumber = Number(b);
+            functionEnabled = true;
+            backspaceButton.disabled = false;
+            if(switchNumber === false){
+                if(a.length<=8){
+                a += this.textContent;
+                display.textContent = a;
+                firstNumber = Number(a);
+                }
+            } else {
+                if(b.length<=8){
+                    b += this.textContent;
+                    display.textContent = b;
+                    secondNumber = Number(b);
+                }
             }
         }
+    } else {
+        if(e.key == "0" && display.textContent === "0"){
+
+        } else if(e.key == "0"||e.key == "1"||e.key == "2"||
+            e.key == "3"||e.key == "4"||e.key == "5"||e.key == "6"||
+            e.key == "7"||e.key == "8"||e.key == "9"||e.key == "."){
+            backspaceButton.disabled = false;
+            if(switchNumber === false){
+                if(a.length<=8){
+                a += e.key;
+                display.textContent = a;
+                firstNumber = Number(a);
+                }
+            } else {
+                if(b.length<=8){
+                    b += e.key;
+                    display.textContent = b;
+                    secondNumber = Number(b);
+                }
+            }
+        } else {
+
+        }
+
     }
 
 }
@@ -126,7 +163,10 @@ function getDecimals(){
 
 }
 
-function undoLastInput(){
+function undoLastInput(e){
+    if(!functionEnabled){
+        return;
+    }
     let newNumber = "";
     if(a.length===1){
         if(result!=0){
@@ -136,6 +176,11 @@ function undoLastInput(){
             a = "";
             firstNumber = 0;
             backspaceButton.disabled = true;
+            functionEnabled = false;
+            // if(e.code=="Backspace"){
+            //     e.preventDefault();
+            //     return false;
+            // }
         }
     } else if(b.length===1){
         if(result!=0){
@@ -145,6 +190,7 @@ function undoLastInput(){
             b = "";
             secondNumber = 0;
             backspaceButton.disabled = true;
+            functionEnabled = false;
         }
     } else {
         if(switchNumber===false){
@@ -235,40 +281,76 @@ function clearDisplay(){
     backspaceButton.disabled = true;
 }
 
-function setOperator(){
-
-    if(op===""){
-        op = this.textContent;
-        // console.log("The operator is: "+ op);
-        switchNumber = true;
-        pointButton.disabled = false;
-        operator = op;
-        this.style.color = "red";
-    } else {
-        if(secondNumber != ""){
-            operate();
-            firstNumber = result;
+function setOperator(e){
+    if(e.type == "click"){
+        if(op===""){
+            op = this.textContent;
+            // console.log("The operator is: "+ op);
             switchNumber = true;
             pointButton.disabled = false;
-            op = this.textContent;
-            console.log("The first number is: " + firstNumber);
             operator = op;
             this.style.color = "red";
-            b = "";
-            secondNumber = "";
         } else {
-            firstNumber = result;
-            switchNumber = true;
-            op = this.textContent;
-            // console.log("The operator is: " + op);
-            operator = op;
-            operatorButton.forEach(button =>{
-                button.style.color = "white";
-            })
-            this.style.color = "red";
-            b = "";
-            secondNumber = "";
+            if(secondNumber != ""){
+                operate();
+                firstNumber = result;
+                switchNumber = true;
+                pointButton.disabled = false;
+                op = this.textContent;
+                console.log("The first number is: " + firstNumber);
+                operator = op;
+                this.style.color = "red";
+                b = "";
+                secondNumber = "";
+            } else {
+                firstNumber = result;
+                switchNumber = true;
+                op = this.textContent;
+                // console.log("The operator is: " + op);
+                operator = op;
+                operatorButton.forEach(button =>{
+                    button.style.color = "white";
+                })
+                this.style.color = "red";
+                b = "";
+                secondNumber = "";
+            }
         }
+    } else {
+        if(op===""){
+            op = e.key;
+            // console.log("The operator is: "+ op);
+            switchNumber = true;
+            pointButton.disabled = false;
+            operator = op;
+            // e.key.style.color = "red";
+        } else {
+            if(secondNumber != ""){
+                operate();
+                firstNumber = result;
+                switchNumber = true;
+                pointButton.disabled = false;
+                op = e.key;
+                console.log("The first number is: " + firstNumber);
+                operator = op;
+                // e.key.style.color = "red";
+                b = "";
+                secondNumber = "";
+            } else {
+                firstNumber = result;
+                switchNumber = true;
+                op = e.key;
+                // console.log("The operator is: " + op);
+                operator = op;
+                operatorButton.forEach(button =>{
+                    button.style.color = "white";
+                })
+                // e.key.style.color = "red";
+                b = "";
+                secondNumber = "";
+            }
+        }
+
     }
 }
 
