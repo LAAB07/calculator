@@ -38,15 +38,17 @@ equalsButton.addEventListener("click", operate);
 backspaceButton.addEventListener("click", undoLastInput);
 signButton.addEventListener("click", changeSign);
 pointButton.addEventListener("click", getDecimals);
-document.addEventListener('keydown', (e) => {
-    if (e.code === "NumpadEnter") { operate() } 
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") { operate() } 
     else if (e.code === "Backspace") { undoLastInput() }
     else if (e.code === "Delete") { clearDisplay() }
     else if (e.key === "p") { power() }
     else if (e.key === "+"||e.key === "-"||e.key === "*"||e.key === "/") { setOperator(e)}
     else { setDisplay(e) }
 })
-
+document.addEventListener('keydown', (event) => {
+    console.log("event.key = " + event.key + "  " + "event.code = " + event.code);
+});
 
 //Disable buttons at the beggining
 
@@ -74,14 +76,14 @@ function power(){
         backspaceButton.disabled = true;
         powerButton.style.color = "red";
     } else {
-        clearDisplay();
-        display.textContent = "";
-        turnOff = true;
-        allButtons.forEach(button =>{
-            button.disabled = true;
-        })
-        powerButton.style.color = "rgb(102, 26, 26)";
-        powerButton.disabled = false;
+        // clearDisplay();
+        // display.textContent = "";
+        // turnOff = true;
+        // allButtons.forEach(button =>{
+        //     button.disabled = true;
+        // })
+        // powerButton.style.color = "rgb(102, 26, 26)";
+        // powerButton.disabled = false;
     }
 }
 
@@ -89,7 +91,7 @@ function setDisplay(e){
     if(turnOff===true){
         return;
     } else {
-        if(e.type == "click"){
+        if(e.type === "click"){
             if(this.textContent === "0" && display.textContent === "0"){
                 return;
             } else {
@@ -110,11 +112,11 @@ function setDisplay(e){
                 }
             }
         } else {
-            if(e.key == "0" && display.textContent === "0"){
+            if(e.key === "0" && display.textContent === "0"){
                 return;
-            } else if(e.key == "0"||e.key == "1"||e.key == "2"||
-                e.key == "3"||e.key == "4"||e.key == "5"||e.key == "6"||
-                e.key == "7"||e.key == "8"||e.key == "9"||e.key == "."){
+            } else if(e.key === "0"||e.key === "1"||e.key === "2"||
+                e.key === "3"||e.key === "4"||e.key === "5"||e.key === "6"||
+                e.key === "7"||e.key === "8"||e.key === "9"||e.key === "."){
                     functionEnabled = true;
                     backspaceButton.disabled = false;
                     if(switchNumber === false){
@@ -275,7 +277,7 @@ function clearDisplay(){
 }
 
 function setOperator(e){
-    if(e.type == "click"){
+    if(e.type === "click"){
         if(op===""){
             op = this.textContent;
             switchNumber = true;
